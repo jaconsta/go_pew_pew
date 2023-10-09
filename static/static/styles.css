@@ -1,0 +1,33 @@
+body {
+  color: #222;
+  background: #fff;
+  font: 100% system-ui;
+}
+a {
+  color: #0033cc;
+}
+
+.center {
+  margin: auto;
+  width: 50%;
+  border: 3px solid #ff7a18;
+  padding: 10px;
+}
+.login-section{
+  border: 1px solid gray;
+  margin-top: 30px;
+  text-align: center;
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    color: #eee;
+    background: #121212;
+  }
+
+  body a {
+    color: #809fff;
+  }
+}
+
+

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="color-scheme" content="dark light">
+    <title>Pew pew</title>
+    <link rel="stylesheet" type="text/css" href="static/styles.css">
+  </head>
+  <body>
+    <main class="center">
+      <header>
+      <h1>Find a spot, then shoot!</h1>
+      <h3>Current room: <span id="room-name">-</span></h3>
+      <h3>Status: <span id="conn-status">Disconnected</span></h3>
+      <hr />
+      </header>
+      <section>
+        <form id="room-selection">
+          <label for="room_name">Type room:</label>
+          <input type="text" id="room_name" name="room-name" />
+          <br/>
+          <input type="submit" value="Join room" />
+        </form>
+      </section>
+      <hr />
+      <section class="game-content">
+        <form id="opponent-select">
+          <label for="opponent-target">Target:</label>
+          <select id="opponent-target" name="opponent-target">
+            <option value="any" selected>Any</option>
+            <option value="playerA">player A</option>
+            <option value="playerB">player B</option>
+          </select>
+          <br/>
+          <br/>
+          <button type="submit" > Shooot </button>
+        </form>
+      </section>
+      <br/>
+      <hr/>
+      <br/>
+      <aside id="events-log">
+        <div>Events log</div>
+        <br/>
+        <div><div>Disconnected.</div></div>
+      </aside>
+      <hr />
+      <section class="login-section">
+        <form id="login-form">
+          <label for="username">Username</label>
+          <input type="text" id="username" name="username"/>
+          <input type="submit" value="Click to connect" />
+        </form>
+      </section>
+    </main>
+    <script type="application/javascript" src="static/index.js"></script>
+  </body>
+</html>
