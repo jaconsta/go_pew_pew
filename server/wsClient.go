@@ -31,6 +31,10 @@ var (
 	pingInterval = (pongWait * 9) / 10
 )
 
+var (
+	openRooms = []string{"lobby", "jungle", "tundra"}
+)
+
 func NewWsClient(c *websocket.Conn, m *Manager, u *User) *Client {
 	client := Client{
 		connection: c,
@@ -38,7 +42,7 @@ func NewWsClient(c *websocket.Conn, m *Manager, u *User) *Client {
 		egress:     make(chan Event),
 		gameData: &GameData{
 			user: u,
-			room: "lobby",
+			room: openRooms[0],
 			life: 5,
 		},
 	}
@@ -69,7 +73,6 @@ func (c *Client) readMessages() {
 			log.Println("Received not supported messageType:", mtype)
 			continue
 		}
-		// log.Println("messageReceived", string(message))
 		c.callEventRouter(message)
 	}
 }

@@ -9,6 +9,9 @@ const (
 	// OUT
 	ImpactSendEvent   = "RECEIVE_IMPACT"
 	ImpactNotifyEvent = "NOTIFY_IMPACT"
+	ImpactFailedEvent = "FAILED_IMPACT"
+	RoomListEvent     = "ROOM_LIST"
+	RoomUsersEvent    = "ROOM_USERS"
 )
 
 type EventHandler func(event Event, c *Client) error
@@ -21,8 +24,17 @@ type Event struct {
 
 // Specific Event's payload
 
+type AvailableRooms struct {
+	Rooms []string `json:"rooms"`
+}
+
 type ChangeRoom struct {
 	Room string `json:"room"`
+}
+
+type UsersInRoom struct {
+	Room  string   `json:"room"`
+	Users []string `json:"users"`
 }
 
 type ImpactSent struct {
@@ -35,10 +47,6 @@ type ImpactSend struct {
 	NewLife  int    `json:"newLife"`
 }
 
-// type ImpactNotify struct {
-// 	// From
-// 	Attacker string `json:"attacker"`
-// 	// To
-// 	Target  string `json:"target"`
-// 	NewLife int    `json:"newLife"`
-// }
+type ErrorMessage struct {
+	Error string `json:"error"`
+}

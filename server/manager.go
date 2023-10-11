@@ -6,7 +6,6 @@ import (
 	"net/http"
 	"sync"
 
-	// 	"github.com/google/uuid"
 	"github.com/gorilla/websocket"
 )
 
@@ -66,6 +65,7 @@ func (m *Manager) serveWebsocket(w http.ResponseWriter, r *http.Request) {
 
 	go wsClient.readMessages()
 	go wsClient.writeMessages()
+	go RoomListSender(wsClient)
 }
 
 func (m *Manager) addClient(c *Client) {
@@ -95,7 +95,6 @@ func (m *Manager) routeEvent(event Event, c *Client) error {
 
 // Move me out
 type User struct {
-	// id uuid.UUID
 	name string
 }
 
