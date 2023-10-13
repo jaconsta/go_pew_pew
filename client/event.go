@@ -14,15 +14,12 @@ const (
 	RoomUsersEvent    = "ROOM_USERS"
 )
 
-type EventHandler func(event Event, c *Client) error
-
-// Parent structure of the event
 type Event struct {
 	Type    string          `json:"type"`
 	Payload json.RawMessage `json:"payload"`
 }
 
-// Events possible payloads
+type EventHandler func(event Event, c *Client) error
 
 type AvailableRooms struct {
 	Rooms []string `json:"rooms"`
