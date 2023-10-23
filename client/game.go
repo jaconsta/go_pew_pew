@@ -36,18 +36,20 @@ func NewRoom() Room {
 }
 
 type Game struct {
-	room Room
-	user *User
-	life int
+	room  Room
+	user  *User
+	life  int
+	ready bool
 
 	sync.RWMutex
 }
 
 func NewGameData(user *User) *Game {
 	return &Game{
-		room: NewRoom(),
-		user: user,
-		life: 5,
+		room:  NewRoom(),
+		user:  user,
+		ready: false,
+		life:  5,
 	}
 }
 
@@ -79,6 +81,7 @@ func (g *Game) selectARoom() (string, error) {
 	g.Lock()
 	defer g.Unlock()
 
+	g.ready = false
 	if len(g.room.list) == 0 {
 		g.room.selected = ""
 		return g.room.selected, fmt.Errorf("Room list is empty")
@@ -91,7 +94,7 @@ func (g *Game) selectATarget() (string, error) {
 	g.Lock()
 	defer g.Unlock()
 
-	if len(g.room.players) <= 1 {
+	if len(g.room.players) < 2 {
 		g.room.target = ""
 		return "", fmt.Errorf("Room %s is empty, current players: me, myself and I", g.room.selected)
 	}
@@ -100,7 +103,10 @@ func (g *Game) selectATarget() (string, error) {
 		i := rand.Intn(len(g.room.players))
 		selected := g.room.players[i]
 		if selected != g.user.username {
-			return selected, nil
+			g.ready = true
+			g.room.target = selected
+			break
 		}
 	}
+	return g.room.target, nil
 }

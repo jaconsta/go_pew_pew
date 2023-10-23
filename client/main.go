@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"log"
 	"sync"
+	"time"
 )
 
 func main() {
@@ -17,7 +18,10 @@ func main() {
 	var wg sync.WaitGroup
 	wg.Add(1)
 	go readLoop(client, &wg)
+	quit := make(chan struct{})
+	go writeLoop(client, &quit)
 	wg.Wait()
+	close(quit)
 }
 
 func readLoop(c *Client, wg *sync.WaitGroup) {
@@ -38,4 +42,21 @@ func readLoop(c *Client, wg *sync.WaitGroup) {
 		}
 	}
 	wg.Done()
+}
+
+func writeLoop(c *Client, q *chan struct{}) {
+	shootTicker := time.NewTicker(5 * time.Second)
+	for {
+		select {
+		case <-shootTicker.C:
+			if c.gameData.ready {
+				log.Println("Aiming")
+				outShoot(c)
+			}
+
+		case <-*q:
+			shootTicker.Stop()
+			return
+		}
+	}
 }

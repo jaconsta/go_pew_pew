@@ -220,11 +220,9 @@ function handleNotifyInpact(payload) {
  * @param {RoomListEvent} payload
  **/
 function handleUpdateRooms(payload) {
-  console.log(payload);
   const roomOptions = payload.rooms
     .map((room) => `<option value="${room}">${room}</option>`)
     .join('');
-  console.log(payload.rooms, roomOptions);
   document.getElementById('room_name').innerHTML = roomOptions;
 }
 /**
